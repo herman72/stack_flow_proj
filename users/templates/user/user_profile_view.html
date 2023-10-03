@@ -1,3 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+<h2>User Profile</h2>
+  <p><strong>Username:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Date Joined:</strong> {{ user.date_joined }}</p>
+  <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+  <p><strong>National ID:</strong> {{ user.national_id }}</p>
+  <p><strong>Active Status:</strong> {% if user.is_active %}Active{% else %}Inactive{% endif %}</p>
 {% endblock %}
