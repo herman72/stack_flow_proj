@@ -22,6 +22,15 @@ class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
 
-
 class Answer(models.Model):
-    pass
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    upvoters = models.ManyToManyField(User, related_name='upvoted_answers')
+    downvoters = models.ManyToManyField(User, related_name='downvoted_answers')
+
+    @property
+    def votes(self):
+        return self.upvoters.count() - self.downvoters.count()
