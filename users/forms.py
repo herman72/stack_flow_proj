@@ -5,7 +5,23 @@ from .models import User
 
 
 class UserUpdateForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'phone_number', 'national_id']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        user_id = self.instance.id
+        if User.objects.filter(email=email).exclude(id=user_id).exists():
+            raise ValidationError("This email is already exist!")
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        user_id = self.instance.id
+        if User.objects.filter(username=username).exclude(id=user_id).exists():
+            raise ValidationError("This username is already exist!")
+        return username
 
 
 class UserRegisterForm(UserUpdateForm):
