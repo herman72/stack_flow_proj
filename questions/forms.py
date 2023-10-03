@@ -13,7 +13,13 @@ class QuestionForm(forms.ModelForm):
 
 
 class AnswerForm(forms.ModelForm):
-    pass
+    body = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'max_length': 500}))
+
+    def clean_body(self):
+        body = self.cleaned_data.get('body')
+        if body.count('\n') > 4:
+            raise forms.ValidationError("The body can have a maximum of 5 lines.")
+        return body
 
 
 class SearchForm(forms.Form):
