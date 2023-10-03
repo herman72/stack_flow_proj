@@ -1,3 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+<h2>Create a Tag</h2>
+  <form method="post" action="{% url 'create_tag' %}">
+    {% csrf_token %}
+    {{ tag_form.as_p }}
+    <button type="submit">Create Tag</button>
+  </form>
 {% endblock %}
