@@ -27,5 +27,17 @@ class UserRegisterForm(UserUpdateForm):
             raise ValidationError("This username is already exist!")
         return username
 
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if not password or not confirm_password:
+            raise forms.ValidationError("Enter the both of password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("Password must match")
+
+
 class UserLoginForm(forms.Form):
     pass
