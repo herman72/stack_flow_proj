@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Question, Answer, Tag
+from .models import Tag
 
 
 class QuestionForm(forms.ModelForm):
@@ -23,8 +23,14 @@ class AnswerForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    pass
+    query = forms.CharField(max_length=255,
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search...'}))
 
 
 class TagForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = Tag
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter tag name...'}),
+        }
